@@ -38,4 +38,5 @@ out/
 
 
 .dockersecrets/
+*.env
 *.swp

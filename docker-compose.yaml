@@ -6,9 +6,11 @@ services:
         shm_size: 128mb
         environment:
             POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
-            POSTGRES_DB: order
+            POSTGRES_DB: orderlogger
         secrets:
             - postgres_password
+        ports:
+            - "5432:5432"
 
     adminer:
         image: adminer
