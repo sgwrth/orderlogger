@@ -34,4 +34,7 @@ public class Article {
 			inverseJoinColumns = @JoinColumn(name = "order_id", nullable = false)
 	)
 	private Set<Order> orders = new HashSet<>();
+	
+	private String name;
+	private Long priceInCents;
 }

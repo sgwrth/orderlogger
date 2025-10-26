@@ -1,5 +1,6 @@
 package dev.sgwrth.orderlogger.entity;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,6 +32,8 @@ public class Order {
 	@JoinColumn(name = "customer_id", nullable = false)
 	private Customer customer;
 
-	@ManyToMany(mappedBy = "orders")
+	@ManyToMany(mappedBy = "orders") // PK of the articles_orders table (see Article class).
 	private Set<Article> articles = new HashSet<>();
+	
+	private LocalDateTime orderDate;
 }

@@ -8,17 +8,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "customers")
@@ -28,6 +25,10 @@ public class Customer {
 	@Column(nullable = false)
 	private Long id;
 	
-	@OneToMany(mappedBy = "id")
+	@OneToMany(mappedBy = "id") // PK of the orders table.
 	private Set<Order> orders = new HashSet<>();
+	
+	private String email;
+	private String firstname;
+	private String lastname;
 }

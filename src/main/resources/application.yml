@@ -8,12 +8,16 @@ spring:
     username: postgres
     password: ${postgresPassword}
   jpa:
+    defer-datasource-initialization: true
     hibernate:
       ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: always
 server:
-  port: 8082
+  port: 8081 # Adminer runs on 8080.
 postgresPassword: ${POSTGRES_PASSWORD}
 ---
