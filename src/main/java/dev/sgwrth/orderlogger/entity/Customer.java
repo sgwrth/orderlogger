@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +31,7 @@ public class Customer {
 	private Long id;
 	
 	@OneToMany(mappedBy = "id") // PK of the orders table.
+	@JsonIgnore
 	private Set<Order> orders = new HashSet<>();
 	
 	private String email;

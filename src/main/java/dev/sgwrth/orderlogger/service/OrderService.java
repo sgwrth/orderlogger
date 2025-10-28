@@ -3,13 +3,11 @@ package dev.sgwrth.orderlogger.service;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
 import dev.sgwrth.orderlogger.dto.PlaceOrderDto;
 import dev.sgwrth.orderlogger.entity.Article;
-import dev.sgwrth.orderlogger.entity.Customer;
 import dev.sgwrth.orderlogger.entity.Order;
 import dev.sgwrth.orderlogger.repository.ArticleRepository;
 import dev.sgwrth.orderlogger.repository.CustomerRepository;

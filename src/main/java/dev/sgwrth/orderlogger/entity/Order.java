@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +36,7 @@ public class Order {
 
 	@ManyToOne
 	@JoinColumn(name = "customer_id", nullable = false)
+	@JsonIgnore
 	private Customer customer;
 
 	@ManyToMany
@@ -42,6 +45,7 @@ public class Order {
 			joinColumns = @JoinColumn(name = "order_id", nullable = false),
 			inverseJoinColumns = @JoinColumn(name = "article_id", nullable = false)
 	)
+	@JsonIgnore
 	private Set<Article> articles = new HashSet<>();
 
 	private LocalDateTime orderDate;
