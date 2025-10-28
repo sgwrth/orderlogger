@@ -2,6 +2,7 @@ package dev.sgwrth.orderlogger.controller;
 
 import java.util.List;
 
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,9 +17,14 @@ import dev.sgwrth.orderlogger.service.OrderService;
 @RequestMapping("/order")
 public class OrderController {
 	private OrderService orderService;
+	private KafkaTemplate<String, String> kafkaTemplate;
 	
-	OrderController(OrderService orderService) {
+	OrderController(
+			OrderService orderService,
+			KafkaTemplate<String, String> kafkaTemplate
+	) {
 		this.orderService = orderService;
+		this.kafkaTemplate = kafkaTemplate;
 	}
 	
 	@GetMapping("/all")
@@ -29,5 +35,6 @@ public class OrderController {
 	@PostMapping(value = "/new", consumes = "application/json")
 	private void saveNewOrder(@RequestBody PlaceOrderDto placeOrderDto) {
 		this.orderService.saveNewOrder(placeOrderDto);
+		this.kafkaTemplate.send("topic0", "Kafka message sent");
 	}
 }
