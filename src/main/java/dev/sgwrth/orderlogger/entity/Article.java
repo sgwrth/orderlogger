@@ -1,6 +1,7 @@
 package dev.sgwrth.orderlogger.entity;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -13,11 +14,13 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "articles")
@@ -27,14 +30,33 @@ public class Article {
 	@Column(nullable = false)
 	private Long id;
 
-	@ManyToMany
-	@JoinTable(
-			name = "articles_orders",
-			joinColumns = @JoinColumn(name = "arcticle_id", nullable = false),
-			inverseJoinColumns = @JoinColumn(name = "order_id", nullable = false)
-	)
+	@ManyToMany(mappedBy = "articles") // PK of the articles_orders table (see Article class).
 	private Set<Order> orders = new HashSet<>();
-	
+
 	private String name;
 	private Long priceInCents;
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (obj == null) {
+			return false;
+		}
+		
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		
+		Article other = (Article) obj;
+		return Objects.equals(id, other.id);
+	}
 }
