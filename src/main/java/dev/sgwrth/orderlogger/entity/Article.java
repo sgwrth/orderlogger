@@ -1,11 +1,16 @@
 package dev.sgwrth.orderlogger.entity;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.hibernate.annotations.Type;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +41,10 @@ public class Article {
 
 	private String name;
 	private Long priceInCents;
-
+	
+	@Type(JsonType.class)
+	@Column(columnDefinition = "jsonb")
+	private String attributes;
 
 	@Override
 	public int hashCode() {
