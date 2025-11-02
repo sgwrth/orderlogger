@@ -44,7 +44,11 @@ public class Article {
 	
 	@Type(JsonType.class)
 	@Column(columnDefinition = "jsonb")
-	private String attributes;
+	private Map<String, String> attributes = new HashMap<>();
+	
+	private void addAttribute(String key, String value) {
+		this.attributes.put(key, value);
+	}
 
 	@Override
 	public int hashCode() {
