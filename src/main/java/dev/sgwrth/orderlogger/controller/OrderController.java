@@ -35,6 +35,6 @@ public class OrderController {
 	@PostMapping(value = "/new", consumes = "application/json")
 	private void saveNewOrder(@RequestBody PlaceOrderDto placeOrderDto) {
 		this.orderService.saveNewOrder(placeOrderDto);
-		this.kafkaTemplate.send("topic0", "Kafka message sent");
+		this.kafkaTemplate.send("receive-order", "Order received");
 	}
 }
