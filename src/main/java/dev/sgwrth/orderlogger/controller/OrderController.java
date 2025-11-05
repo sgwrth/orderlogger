@@ -16,8 +16,9 @@ import dev.sgwrth.orderlogger.service.OrderService;
 @RestController
 @RequestMapping("/order")
 public class OrderController {
-	private OrderService orderService;
-	private KafkaTemplate<String, String> kafkaTemplate;
+
+	private final OrderService orderService;
+	private final KafkaTemplate<String, String> kafkaTemplate;
 	
 	OrderController(
 			OrderService orderService,

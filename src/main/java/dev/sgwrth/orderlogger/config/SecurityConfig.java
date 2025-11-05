@@ -15,6 +15,7 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
+			.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(
 					(authorizeHttpRequests) -> {
 						authorizeHttpRequests
@@ -30,7 +31,7 @@ public class SecurityConfig {
 
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/ws/messages/**");
+        return (web) -> web.ignoring().requestMatchers("/ws/kafka/**");
     }
 
 	@Bean
