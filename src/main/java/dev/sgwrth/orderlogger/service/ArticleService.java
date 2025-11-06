@@ -9,6 +9,7 @@ import dev.sgwrth.orderlogger.entity.Article;
 import dev.sgwrth.orderlogger.repository.ArticleRepository;
 
 public interface ArticleService {
+
 	@Service
 	class ArticleServiceImpl implements ArticleService {
 		
@@ -32,4 +33,5 @@ public interface ArticleService {
 	List<Article> getArticles();
 	
 	List<Article> getArticlesByAttribute(KeyValuePairDto kvp);
+
 }

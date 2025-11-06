@@ -19,7 +19,7 @@ public class KafkaMessageHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
-        System.out.println(session.getId() + " Connected");
+        System.out.println(session.getId() + " connected");
         webSocketSessions.add(session);
     }
 
@@ -28,7 +28,7 @@ public class KafkaMessageHandler extends TextWebSocketHandler {
     		throws Exception
     {
         super.afterConnectionClosed(session, status);
-        System.out.println(session.getId() + " Disconnected");
+        System.out.println(session.getId() + " disconnected");
         webSocketSessions.remove(session);
     }
 
@@ -51,7 +51,8 @@ public class KafkaMessageHandler extends TextWebSocketHandler {
                 try {
                     session.sendMessage(new TextMessage(message));
                 } catch (IOException e) {
-                    System.err.println("Failed to send message to session " + session.getId());
+                    System.err.println("Failed to send message to session "
+                    		+ session.getId());
                 }
             }
         }

@@ -30,12 +30,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "articles")
 public class Article {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false)
 	private Long id;
 
-	@ManyToMany(mappedBy = "articles") // PK of the articles_orders table (see Article class).
+	@ManyToMany(mappedBy = "articles") // See Order entity for @JoinTable.
 	@JsonIgnore
 	private Set<Order> orders = new HashSet<>();
 
@@ -72,4 +73,5 @@ public class Article {
 		Article other = (Article) obj;
 		return Objects.equals(id, other.id);
 	}
+
 }

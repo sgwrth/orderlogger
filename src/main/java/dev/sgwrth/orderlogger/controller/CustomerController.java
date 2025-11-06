@@ -12,6 +12,7 @@ import dev.sgwrth.orderlogger.service.CustomerService;
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
+
 	private CustomerService customerService;
 	
 	CustomerController(CustomerService customerService) {
@@ -22,4 +23,5 @@ public class CustomerController {
 	private List<Customer> getCustomers() {
 		return this.customerService.getCustomers();
 	}
+
 }

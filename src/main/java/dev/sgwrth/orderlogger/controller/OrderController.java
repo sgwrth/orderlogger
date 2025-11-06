@@ -38,4 +38,5 @@ public class OrderController {
 		this.orderService.saveNewOrder(placeOrderDto);
 		this.kafkaTemplate.send("receive-order", "Order received");
 	}
+
 }

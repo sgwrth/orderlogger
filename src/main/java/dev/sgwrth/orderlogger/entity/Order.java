@@ -29,6 +29,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "orders")
 public class Order {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false)
@@ -72,4 +73,5 @@ public class Order {
 		Order other = (Order) obj;
 		return Objects.equals(id, other.id);
 	}
+
 }

@@ -14,8 +14,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
 	
     @Override
     public void registerWebSocketHandlers(
-        WebSocketHandlerRegistry webSocketHandlerRegistry)
-    {
+        WebSocketHandlerRegistry webSocketHandlerRegistry
+	) {
         webSocketHandlerRegistry
             .addHandler(this.kafkaMessageHandler(), "/ws/kafka")
             .setAllowedOrigins("*");
