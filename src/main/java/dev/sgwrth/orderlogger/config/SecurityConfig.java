@@ -10,26 +10,27 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import dev.sgwrth.orderlogger.service.CustomUserDetailsService;
+import dev.sgwrth.orderlogger.filter.JwtAuthFilter;
 import dev.sgwrth.orderlogger.service.CustomUserService;
 
 @Configuration
 public class SecurityConfig {
 	
 	private final JwtAuthFilter jwtAuthFilter;
-	private final CustomUserDetailsService customUserDetailsService;
+	private final UserDetailsService userDetailsService;
 
 	public SecurityConfig(
 			JwtAuthFilter jwtAuthFilter,
-			CustomUserService customUserService
+			UserDetailsService userDetailsService
 	) {
 		this.jwtAuthFilter = jwtAuthFilter;
-		this.customUserDetailsService = customUserDetailsService;
+		this.userDetailsService = userDetailsService;
 	}
 
 	@Bean
@@ -67,17 +68,19 @@ public class SecurityConfig {
 	
 	@Bean
 	AuthenticationProvider authenticationProvider(
-			CustomUserDetailsService customUserDetailsService,
+			UserDetailsService userDetailsService,
 			PasswordEncoder passwordEncoder
 	) {
 		DaoAuthenticationProvider provider
-			= new DaoAuthenticationProvider(customUserDetailsService);
+			= new DaoAuthenticationProvider(userDetailsService);
 		provider.setPasswordEncoder(passwordEncoder);
 		return provider;
 	}
 	
 	@Bean
-	AuthenticationManager authenticationManager(AuthenticationConfiguration config) {
+	AuthenticationManager authenticationManager(AuthenticationConfiguration config)
+			throws Exception
+	{
 		return config.getAuthenticationManager();
 	}
 

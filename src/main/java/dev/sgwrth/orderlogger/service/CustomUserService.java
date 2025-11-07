@@ -17,16 +17,16 @@ public interface CustomUserService {
 			this.customUserRepository = customUserRepository;
 		}
 		
-		@Override
-		public String addUser(CustomUserDto customUserDto) {
-			final var username = customUserDto.username();
-			final var password = customUserDto.password();
-			final var newCustomUser = new CustomUser();
-			newCustomUser.setUsername(username);
-			newCustomUser.setPassword(password);
-			this.customUserRepository.save(newCustomUser);
-			return "User saved.";
-		}
+//		@Override
+//		public String addUser(CustomUserDto customUserDto) {
+//			final var username = customUserDto.username();
+//			final var password = customUserDto.password();
+//			final var newCustomUser = new CustomUser();
+//			newCustomUser.setUsername(username);
+//			newCustomUser.setPassword(password);
+//			this.customUserRepository.save(newCustomUser);
+//			return "User saved.";
+//		}
 		
 	}
 	
