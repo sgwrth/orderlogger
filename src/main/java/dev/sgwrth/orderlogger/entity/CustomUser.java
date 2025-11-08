@@ -28,6 +28,11 @@ public class CustomUser implements UserDetails {
 	private String username;
 
 	private String password;
+	
+	public CustomUser(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
 
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub

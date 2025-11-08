@@ -1,5 +1,6 @@
 package dev.sgwrth.orderlogger.service;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtService {
 
-	@Value("{jwtSecret")
+	@Value("${jwtSecret}")
     public String SECRET;
 
     public String generateToken(String username) {
@@ -38,8 +39,7 @@ public class JwtService {
     }
 
     private Key getSignKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
     }
 
     public String extractUsername(String token) {
@@ -56,7 +56,7 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
+        return Jwts.parser()
                 .setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(token)
