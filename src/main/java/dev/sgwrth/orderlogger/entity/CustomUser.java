@@ -20,6 +20,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CustomUser implements UserDetails {
 	
+	/**
+	 * Java recommends that all Serializable classes explicitly declare a
+	 * serialVersionUID to ensure consistent serialization across different
+	 * JVMs and versions.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

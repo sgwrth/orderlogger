@@ -3,14 +3,11 @@ package dev.sgwrth.orderlogger.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import dev.sgwrth.orderlogger.filter.JwtAuthFilter;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 	
 	private final JwtAuthFilter jwtAuthFilter;
@@ -28,16 +26,17 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	SecurityFilterChain filterChain(
-			HttpSecurity http,
-			AuthenticationProvider authenticationProvider
-	) throws Exception {
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 			.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(
 					(authorizeHttpRequests) -> {
 						authorizeHttpRequests
-							.requestMatchers("/order/new", "/auth/**").permitAll()
+							.requestMatchers(
+									"/order/new",
+									"/auth/**",
+									"/ws/kafka"
+							).permitAll()
 							.anyRequest().authenticated();
 					}
 			)
@@ -46,32 +45,15 @@ public class SecurityConfig {
 						session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 					}
 			)
-			.authenticationProvider(authenticationProvider)
 			.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 			.formLogin(Customizer.withDefaults())
 			.httpBasic(Customizer.withDefaults());
 		return http.build();
 	}
 
-    @Bean
-    WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/ws/kafka/**");
-    }
-
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-	}
-	
-	@Bean
-	AuthenticationProvider authenticationProvider(
-			UserDetailsService userDetailsService,
-			PasswordEncoder passwordEncoder
-	) {
-		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(userDetailsService);
-		provider.setPasswordEncoder(passwordEncoder);
-		return provider;
 	}
 	
 	@Bean
