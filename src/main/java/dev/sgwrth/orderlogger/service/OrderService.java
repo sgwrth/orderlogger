@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import dev.sgwrth.orderlogger.dto.PlaceOrderDto;
@@ -17,18 +18,21 @@ public interface OrderService {
 	@Service
 	class OrderServiceImpl implements OrderService {
 		
-		private ArticleRepository articleRepository;
-		private CustomerRepository customerRepository;
-		private OrderRepository orderRepository;
+		private final ArticleRepository articleRepository;
+		private final CustomerRepository customerRepository;
+		private final OrderRepository orderRepository;
+		private final KafkaTemplate<String, String> kafkaTemplate;
 		
 		OrderServiceImpl(
 				ArticleRepository articleRepository,
 				CustomerRepository customerRepository,
-				OrderRepository orderRepository
+				OrderRepository orderRepository,
+				KafkaTemplate<String, String> kafkaTemplate
 		) {
 			this.articleRepository = articleRepository;
 			this.customerRepository = customerRepository;
 			this.orderRepository = orderRepository;
+			this.kafkaTemplate = kafkaTemplate;
 		}
 		
 		@Override
@@ -72,6 +76,8 @@ public interface OrderService {
 			
 			// Save new order.
 			this.orderRepository.save(newOrder);
+
+			this.kafkaTemplate.send("receive-order", "Order received.");
 		}
 	}
 	

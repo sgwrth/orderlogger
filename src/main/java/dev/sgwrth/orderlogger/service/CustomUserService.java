@@ -2,6 +2,7 @@ package dev.sgwrth.orderlogger.service;
 
 import java.util.Optional;
 
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,13 +19,16 @@ public interface CustomUserService {
 		
 		private final CustomUserRepository customUserRepository;
 		private final PasswordEncoder passwordEncoder;
+		private final KafkaTemplate<String, String> kafkaTemplate;
 		
 		public CustomUserServiceImpl(
 				CustomUserRepository customUserRepository,
-				PasswordEncoder passwordEncoder
+				PasswordEncoder passwordEncoder,
+				KafkaTemplate<String, String> kafkaTemplate
 		) {
 			this.customUserRepository = customUserRepository;
 			this.passwordEncoder = passwordEncoder;
+			this.kafkaTemplate = kafkaTemplate;
 		}
 
 		@Override
@@ -32,6 +36,7 @@ public interface CustomUserService {
 			customUserDto.setPassword(passwordEncoder.encode(customUserDto.getPassword()));
 			var user = new CustomUser(customUserDto.getUsername(), customUserDto.getPassword());
 			this.customUserRepository.save(user);
+			this.kafkaTemplate.send("create-user", "User created.");
 			return "User added.";
 		}
 		

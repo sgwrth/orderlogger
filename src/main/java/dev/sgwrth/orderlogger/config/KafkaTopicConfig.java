@@ -14,4 +14,15 @@ public class KafkaTopicConfig {
 	            .build();
 	}
 
+	@Bean
+	public NewTopic userCreated() {
+	    return TopicBuilder.name("create-user")
+	            .build();
+	}
+
+	@Bean
+	public NewTopic tokenIssued() {
+	    return TopicBuilder.name("issue-token")
+	            .build();
+	}
 }

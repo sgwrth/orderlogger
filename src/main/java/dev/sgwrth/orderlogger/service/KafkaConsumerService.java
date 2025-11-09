@@ -15,9 +15,20 @@ public class KafkaConsumerService {
 	}
 
 	@KafkaListener(topics = "receive-order", groupId = "my-group")
-	private void listen(String message) {
+	private void receiveOrder(String message) {
 		System.out.println(message);
 		kafkaMessageHandler.broadcastMessage(message);
 	}
 
+	@KafkaListener(topics = "create-user", groupId = "my-group")
+	private void createUser(String message) {
+		System.out.println(message);
+		kafkaMessageHandler.broadcastMessage(message);
+	}
+
+	@KafkaListener(topics = "issue-token", groupId = "my-group")
+	private void issueToken(String message) {
+		System.out.println(message);
+		kafkaMessageHandler.broadcastMessage(message);
+	}
 }
