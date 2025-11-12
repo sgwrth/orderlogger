@@ -45,6 +45,7 @@ services:
       - jenkins_home:/var/jenkins_home
   ssh-agent:
     image: jenkins/ssh-agent
+
 volumes:
   jenkins_home:
 

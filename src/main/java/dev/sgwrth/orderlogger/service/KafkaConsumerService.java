@@ -9,9 +9,14 @@ import dev.sgwrth.orderlogger.handler.KafkaMessageHandler;
 public class KafkaConsumerService {
 	
 	private final KafkaMessageHandler kafkaMessageHandler;
+	private final LoggerService loggerService;
 	
-	public KafkaConsumerService(KafkaMessageHandler kafkaMessageHandler) {
+	public KafkaConsumerService(
+			KafkaMessageHandler kafkaMessageHandler,
+			LoggerService loggerService
+	) {
 		this.kafkaMessageHandler = kafkaMessageHandler;
+		this.loggerService = loggerService;
 	}
 
 	@KafkaListener(topics = "receive-order", groupId = "my-group")
@@ -30,5 +35,11 @@ public class KafkaConsumerService {
 	private void issueToken(String message) {
 		System.out.println(message);
 		kafkaMessageHandler.broadcastMessage(message);
+	}
+	
+	@KafkaListener(topics = "log-msg", groupId = "my-group")
+	private void logMsg(String message) {
+		System.out.println(message);
+		this.loggerService.appendMsg(message);
 	}
 }
