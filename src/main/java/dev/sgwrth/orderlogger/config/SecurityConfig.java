@@ -33,8 +33,9 @@ public class SecurityConfig {
 					(authorizeHttpRequests) -> {
 						authorizeHttpRequests
 							.requestMatchers(
-									"/order/new",
 									"/auth/**",
+									"/log",
+									"/order/new",
 									"/ws/kafka"
 							).permitAll()
 							.anyRequest().authenticated();

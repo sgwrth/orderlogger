@@ -40,3 +40,4 @@ out/
 .dockersecrets/
 *.env
 *.swp
+*.log

@@ -19,7 +19,7 @@ public interface LoggerService {
 			try {
 				Files.writeString(
 						path,
-						message,
+						message + "\n",
 						StandardCharsets.UTF_8,
 						StandardOpenOption.CREATE,
 						StandardOpenOption.APPEND
