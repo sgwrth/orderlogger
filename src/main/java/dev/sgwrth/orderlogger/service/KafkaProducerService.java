@@ -13,7 +13,9 @@ public class KafkaProducerService {
 	}
 	
 	public void sendMessage(String topic, String message) {
-		this.kafkaTemplate.send(topic, message);
+		if (topic != null && message != null) {
+			this.kafkaTemplate.send(topic, message);
+		}
 	}
 
 }

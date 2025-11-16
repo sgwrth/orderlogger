@@ -1,6 +1,6 @@
 package dev.sgwrth.orderlogger.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +17,7 @@ public class LoggerController {
 		this.loggerService = loggerService;
 	}
 	
-	@GetMapping
+	@PostMapping
 	private void logMsg(@RequestParam String message) {
 		this.loggerService.appendMsg(message);
 	}

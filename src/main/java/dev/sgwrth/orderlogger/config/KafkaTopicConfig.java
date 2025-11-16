@@ -25,4 +25,10 @@ public class KafkaTopicConfig {
 	    return TopicBuilder.name("issue-token")
 	            .build();
 	}
+
+	@Bean
+	public NewTopic logMsg() {
+		return TopicBuilder.name("log-message")
+				.build();
+	}
 }

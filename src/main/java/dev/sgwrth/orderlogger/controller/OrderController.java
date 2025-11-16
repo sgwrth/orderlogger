@@ -2,7 +2,6 @@ package dev.sgwrth.orderlogger.controller;
 
 import java.util.List;
 
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,14 +17,11 @@ import dev.sgwrth.orderlogger.service.OrderService;
 public class OrderController {
 
 	private final OrderService orderService;
-	private final KafkaTemplate<String, String> kafkaTemplate;
 	
 	OrderController(
-			OrderService orderService,
-			KafkaTemplate<String, String> kafkaTemplate
+			OrderService orderService
 	) {
 		this.orderService = orderService;
-		this.kafkaTemplate = kafkaTemplate;
 	}
 	
 	@GetMapping("/all")

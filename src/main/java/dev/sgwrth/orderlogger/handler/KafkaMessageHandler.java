@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.lang.NonNull;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -18,7 +17,7 @@ public class KafkaMessageHandler extends TextWebSocketHandler {
         = Collections.synchronizedList(new ArrayList<>());
 
     @Override
-    public void afterConnectionEstablished(@NonNull WebSocketSession session)
+    public void afterConnectionEstablished(WebSocketSession session)
     		throws Exception
     {
         super.afterConnectionEstablished(session);
@@ -28,8 +27,8 @@ public class KafkaMessageHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(
-    		@NonNull WebSocketSession session,
-    		@NonNull CloseStatus status
+    		WebSocketSession session,
+    		CloseStatus status
     ) throws Exception {
         super.afterConnectionClosed(session, status);
         System.out.println(session.getId() + " disconnected");
@@ -38,8 +37,8 @@ public class KafkaMessageHandler extends TextWebSocketHandler {
 
     @Override
     public void handleMessage(
-    		@NonNull WebSocketSession session,
-    		@NonNull WebSocketMessage<?> message
+    		WebSocketSession session,
+    		WebSocketMessage<?> message
     ) throws Exception {
         super.handleMessage(session, message);
         for (WebSocketSession webSocketSession : webSocketSessions) {

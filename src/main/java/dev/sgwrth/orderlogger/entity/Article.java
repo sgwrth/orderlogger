@@ -47,10 +47,6 @@ public class Article {
 	@Column(columnDefinition = "jsonb")
 	private Map<String, String> attributes = new HashMap<>();
 	
-	private void addAttribute(String key, String value) {
-		this.attributes.put(key, value);
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
