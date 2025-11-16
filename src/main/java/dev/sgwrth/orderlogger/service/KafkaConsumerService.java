@@ -9,14 +9,9 @@ import dev.sgwrth.orderlogger.handler.KafkaMessageHandler;
 public class KafkaConsumerService {
 	
 	private final KafkaMessageHandler kafkaMessageHandler;
-	private final LoggerService loggerService;
 	
-	public KafkaConsumerService(
-			KafkaMessageHandler kafkaMessageHandler,
-			LoggerService loggerService
-	) {
+	public KafkaConsumerService(KafkaMessageHandler kafkaMessageHandler) {
 		this.kafkaMessageHandler = kafkaMessageHandler;
-		this.loggerService = loggerService;
 	}
 
 	@KafkaListener(topics = "receive-order", groupId = "my-group")

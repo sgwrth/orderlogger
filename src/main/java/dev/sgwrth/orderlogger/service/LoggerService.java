@@ -5,10 +5,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+
+import dev.sgwrth.orderlogger.dto.LoggerMessageDto;
 
 public interface LoggerService {
 	
@@ -22,20 +24,20 @@ public interface LoggerService {
 		}
 		
 		@Override
-		public void appendMsg(String message) {
+		public void appendMsg(LoggerMessageDto loggerMsgDto) {
 			Path path = this.getPathForLogfile();
 			try {
-				String date = LocalDate.now().toString();
+				String date = LocalDateTime.now().toString();
 				Files.writeString(
 						path,
-						"[" + date + "] " + message + "\n",
+						"[" + date + "] " + loggerMsgDto.message() + "\n",
 						StandardCharsets.UTF_8,
 						StandardOpenOption.CREATE,
 						StandardOpenOption.APPEND
 				);
 				this.kafkaTemplate.send("log-message", "[" + date + "] "
 					+ ": Log message: \""
-					+ message
+					+ loggerMsgDto.message()
 					+ "\""
 				);		
 			} catch (IOException e) {
@@ -49,7 +51,7 @@ public interface LoggerService {
 		}
 	}
 	
-	void appendMsg(String message);
+	void appendMsg(LoggerMessageDto loggerMsgDto);
 	
 	Path getPathForLogfile();
 
