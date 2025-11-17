@@ -16,29 +16,27 @@ public class KafkaConsumerService {
 
 	@KafkaListener(topics = "receive-order", groupId = "my-group")
 	private void receiveOrder(String message) {
-		if (message != null) {
-			kafkaMessageHandler.broadcastMessage(message);
-		}
+		this.broadcastMsg(message);
 	}
 
 	@KafkaListener(topics = "create-user", groupId = "my-group")
 	private void createUser(String message) {
-		if (message != null) {
-			kafkaMessageHandler.broadcastMessage(message);
-		}
+		this.broadcastMsg(message);
 	}
 
 	@KafkaListener(topics = "issue-token", groupId = "my-group")
 	private void issueToken(String message) {
-		if (message != null) {
-			kafkaMessageHandler.broadcastMessage(message);
-		}
+		this.broadcastMsg(message);
 	}
 	
 	@KafkaListener(topics = "log-message", groupId = "my-group")
 	private void logMessage(String message) {
+		this.broadcastMsg(message);
+	}
+
+	private void broadcastMsg(String message) {
 		if (message != null) {
-			kafkaMessageHandler.broadcastMessage(message);
+			this.kafkaMessageHandler.broadcastMessage(message);
 		}
 	}
 }
