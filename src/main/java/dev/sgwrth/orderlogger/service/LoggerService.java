@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.kafka.core.KafkaTemplate;
@@ -47,7 +48,8 @@ public interface LoggerService {
 
 		@Override
 		public Path getPathForLogfile() {
-			return Path.of("./logfile.log");
+			final var date = LocalDate.now().toString();
+			return Path.of("./" + date + "_logfile.log");
 		}
 	}
 	
