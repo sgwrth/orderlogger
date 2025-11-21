@@ -28,6 +28,16 @@ spring:
       mode: always
 server:
   port: 8081 # Adminer runs on 8080.
+logging:
+  level:
+    org.springframework.security: TRACE
+    org.springframework.graphql: DEBUG
+graphql:
+  path: /graphql                     # forces the endpoint to be exactly /graphql
+  cors:
+    allowed-origins: "*"
+    allowed-methods: "*"
+    allowed-headers: "*"
 postgresPassword: ${POSTGRES_PASSWORD}
 jwtSecret: ${JWT_SECRET}
 ---
