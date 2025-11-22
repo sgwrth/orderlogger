@@ -34,10 +34,8 @@ logging:
     org.springframework.graphql: DEBUG
 graphql:
   path: /graphql                     # forces the endpoint to be exactly /graphql
-  cors:
-    allowed-origins: "*"
-    allowed-methods: "*"
-    allowed-headers: "*"
+  graphiql:
+    enable: true
 postgresPassword: ${POSTGRES_PASSWORD}
 jwtSecret: ${JWT_SECRET}
 ---
