@@ -1,10 +1,17 @@
 type Query {
-      customerById(id: ID): Customer
+    customerById(id: ID!): Customer
+    orderById(id: ID!): Order
 }
 
 type Customer {
-    id: ID
+    id: ID!
     email: String
     firstname: String
     lastname: String
+}
+
+type Order {
+    id: ID!
+    customer: Customer
+    orderDate: String
 }
